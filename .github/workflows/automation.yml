@@ -1,0 +1,26 @@
+name: Automation Test with Appium JS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  appium-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3.3.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start Appium server
+        run: npx appium
+
+      - name: Run Appium tests
+        run: npx mocha testScenarios/all-specs/allSpecs.js

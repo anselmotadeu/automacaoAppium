@@ -1,0 +1,58 @@
+const assert = require("assert");
+const wd = require("wd");
+
+const androidOptions = {
+  platformName: "Android",
+  deviceName: "createApp",
+  app: "/Users/anselmosantos/Documents/automacao-toDoApp-React/app/ToDo.apk",
+  automationName: "UiAutomator2",
+  dontStopAppOnReset: true
+};
+
+const driver = wd.promiseChainRemote({
+  hostname: "127.0.0.1",
+  port: 4723,
+  path: "/wd/hub",
+});
+
+describe("Delete Task", function() {
+  this.timeout(60000);
+
+  before(async function() {
+    await driver.init(androidOptions);
+  });
+
+  after(async function() {
+    await driver.quit();
+  });
+
+  it('Deve excluir tarefas corretamente', async () => {
+    
+    // adicionando primeira tarefa para depois excluir
+    const taskNameSelector = 'new UiSelector().text("Escolha o nome de uma tarefa")';
+    const taskName = await driver.waitForElementByAndroidUIAutomator(taskNameSelector);
+    await taskName.click()
+    await taskName.sendKeys('Appium Automation');
+
+    const concluirTask = await driver.waitForElementByAndroidUIAutomator('new UiSelector().text("Tempo de conclusão (HH:MM)")')
+    await concluirTask.click()
+    await concluirTask.sendKeys('0200');
+
+    const adicionarButton = await driver.waitForElementByAndroidUIAutomator('new UiSelector().text("Adicionar")')
+    await adicionarButton.click()
+
+    const deleteButton = await driver.waitForElementByXPath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.widget.TextView')
+    const isDisplayedDeleteButton = await deleteButton.isDisplayed();
+    if (isDisplayedDeleteButton) {
+    console.log('O botão "Delete" está visível');
+    } else {
+    console.log('O botão "Delete" não está visível');
+    }
+
+    await deleteButton.click()
+    await deleteButton.click()
+
+    const deleteButton2 = await driver.waitForElementByAndroidUIAutomator('new UiSelector().text("Excluir")')
+    await deleteButton2.click()
+  });
+});

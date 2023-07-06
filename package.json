@@ -1,0 +1,26 @@
+{
+  "name": "automacaoapp",
+  "version": "1.0.0",
+  "description": "automação com Appium e JS no app que criamos ToDo com React Native",
+  "main": "index.js",
+  "author": "Anselmo Santos",
+  "license": "MIT",
+  "dependencies": {
+    "appium": "^1.22.3",
+    "babel": "^6.23.0",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "wd": "^1.14.0",
+    "webdriverio": "^7.9.0"
+  },
+  "scripts": {
+    "test-all-ANDROID": "npx mocha testScenarios/all-specs/allSpecs.js",
+    "test-add-task-ANDROID": "npx mocha testScenarios/addTask.js",
+    "test-edit-task-ANDROID": "npx mocha testScenarios/editTask.js",
+    "test-mark-task-ANDROID": "npx mocha testScenarios/markTest.js",
+    "test-filter-task-ANDROID": "npx mocha testScenarios/filterTask.js",
+    "test-delete-task-ANDROID": "npx mocha testScenarios/deleteTask.js",
+    "test-validation-ANDROID": "npx mocha testScenarios/validationEnter.js",
+    "test-all-scenarios-ANDROID": "npx mocha testScenarios/all-specs/allScenarios.js"
+  }
+}
